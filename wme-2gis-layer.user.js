@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME 2gis Layer
 // @namespace    https://greasyfork.org/scripts/387401-wme-2gis-layer
-// @version      0.2.1
+// @version      0.2.2
 // @description  2gis layer in waze editor
 // @author       ixxvivxxi, madnut-ua
 // @include      https://www.waze.com/editor*
@@ -47,7 +47,7 @@ function init() {
         const y = Math.round(
           (this.maxExtent.top - bounds.top) / (res * this.tileSize.h)
         );
-        const z = this.map.getZoom() + 12;
+        const z = this.map.getZoom();
         let ts = "&ts=online_sd";
         if (this.tilesLang !== "ru") {
           ts = `&ts=online_sd_${tilesLang}`;
@@ -104,7 +104,7 @@ function init() {
   const googleLayerId = W.map.layers[0].id;
 
   W.map.events.register("changelayer", this, function(map) {
-    if (map.layer.id === googleLayerId && map.layer.visibility) {
+    if (map.layer.type && map.layer.visibility) {
       document.getElementById("layer-switcher-item-w2gis").checked = false;
       W.map.getLayerByUniqueName(w2gis.uniqueName).setVisibility(false);
     }
